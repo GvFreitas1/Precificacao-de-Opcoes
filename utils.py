@@ -14,7 +14,7 @@ def black_scholes(S, X, T, r, sigma):
 
 
 def freitas(S, X, T, r, mi, sigma):
-    mi_ST = np.log(S) + T*mi
+    mi_ST = np.log(S) + mi*T
     sigma_ST = np.sqrt(T)*sigma
 
     def ret_lin(s, C):
