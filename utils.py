@@ -14,7 +14,7 @@ def black_scholes(S, X, T, r, sigma):
 
 
 def freitas(S, X, T, r, mi, sigma):
-    mi_ST = np.log(S)
+    mi_ST = np.log(S) + T*mi
     sigma_ST = np.sqrt(T)*sigma
 
     def ret_lin(s, C):
@@ -30,6 +30,6 @@ def freitas(S, X, T, r, mi, sigma):
         D = abs(L + Pt + Pp)
         return D
 
-    C_freitas = minimize_scalar(diferenca_esperancas).x / (1+r)**T
+    C_freitas = minimize_scalar(diferenca_esperancas).x * np.exp(-r*T)
 
     return C_freitas
