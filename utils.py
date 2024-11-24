@@ -30,6 +30,6 @@ def freitas(S, X, T, r, mi, sigma):
         D = abs(L + Pt + Pp)
         return D
 
-    C_freitas = minimize_scalar(diferenca_esperancas).x * np.exp(-r*T)
+    C_freitas = minimize_scalar(diferenca_esperancas).x * np.exp(-r*mi_ST*T)
 
     return C_freitas
