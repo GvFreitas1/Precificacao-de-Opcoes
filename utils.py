@@ -33,3 +33,37 @@ def freitas(S, X, T, r, mi, sigma):
     C_freitas = minimize_scalar(diferenca_esperancas).x * np.exp(-r*mi_ST*T)
 
     return C_freitas
+
+
+def bachelier(S, X, T, r, sigma):
+    D = (S-X)/(sigma*np.sqrt(T))
+    C_B = (S-X)*norm.cdf(D) + sigma*np.sqrt(T)*norm.pdf(D)
+
+    return C_B
+
+def bachelier_option_price(S, K, T, sigma, r):
+    """
+    Calcula o preço de uma opção usando o modelo de Bachelier.
+
+    Parâmetros:
+        S (float): Preço atual do ativo subjacente.
+        K (float): Preço de exercício (strike price).
+        T (float): Tempo até o vencimento (em anos).
+        sigma (float): Volatilidade do ativo (desvio padrão absoluto do preço).
+        r (float): Taxa de juros livre de risco.
+        option_type (str): Tipo da opção ('call' ou 'put').
+
+    Retorno:
+        float: Preço da opção calculado pelo modelo de Bachelier.
+    """
+    # Diferença entre preço do ativo e strike
+    d = S - K
+    # Variância ajustada pelo tempo
+    sigma_t = sigma * np.sqrt(T)
+    
+    # Cálculo de d1 (normalizado pela volatilidade ajustada)
+    d1 = d / sigma_t
+    
+    price = np.exp(-r * T) * (d * norm.cdf(d1) + sigma_t * norm.pdf(d1))
+    
+    return price
